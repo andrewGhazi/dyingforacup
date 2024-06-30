@@ -19,11 +19,13 @@ run_gp(
 
 \item{max_grid_size}{maximum number of grid points to evaluate}
 
-\item{param_ranges}{upper and lower limits of parameter ranges to evaluate}
+\item{param_ranges}{upper and lower limits of parameter ranges to evaluate (ignored if param_grid is specified directly)}
+
+\item{param_grid}{user-specified grid of brew parameters to evaluate GP at}
 }
 \description{
 Run the GP
 }
 \details{
-The function \code{\link{create_ranges()}} will create an example range df.
+The function \code{\link[dyingforacup:create_ranges]{dyingforacup::create_ranges()}} will create an example range df.
 }

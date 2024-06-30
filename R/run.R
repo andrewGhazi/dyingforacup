@@ -99,9 +99,10 @@ center_dat = function(dat, param_ranges) {
 #' @param dat data frame input of brew parameters and rating
 #' @param ... arguments passed to cmdstanr's sample method
 #' @param max_grid_size maximum number of grid points to evaluate
-#' @param param_ranges upper and lower limits of parameter ranges to evaluate
+#' @param param_ranges upper and lower limits of parameter ranges to evaluate (ignored if param_grid is specified directly)
+#' @param param_grid user-specified grid of brew parameters to evaluate GP at
 #' @details
-#' The function \code{\link{create_ranges()}} will create an example range df.
+#' The function \code{\link[dyingforacup:create_ranges]{dyingforacup::create_ranges()}} will create an example range df.
 #' 
 #' @export
 run_gp = function(dat, ..., max_grid_size = 2000,

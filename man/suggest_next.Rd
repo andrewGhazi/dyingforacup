@@ -20,7 +20,9 @@ suggest_next(
 
 \item{max_grid_size}{maximum number of grid points to evaluate}
 
-\item{param_ranges}{upper and lower limits of parameter ranges to evaluate}
+\item{param_ranges}{upper and lower limits of parameter ranges to evaluate (ignored if param_grid is specified directly)}
+
+\item{param_grid}{user-specified grid of brew parameters to evaluate GP at}
 
 \item{offset}{expected improvement hyperparameter. Higher values encourage more
 exploration. Interpreted on the same scale as ratings.}
