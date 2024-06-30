@@ -38,7 +38,6 @@ probability of improving the rating.
 ``` r
 library(dyingforacup)
 
-
 dat = data.frame(grinder_setting = c(8, 193, 25), 
                  temp            = c(7, 195, 20), 
                  bloom_time      = c(9, 179, 45), 

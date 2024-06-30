@@ -6,6 +6,11 @@
 \usage{
 check_df(dat, call = rlang::caller_env())
 }
+\arguments{
+\item{dat}{data frame input}
+
+\item{call}{calling environment}
+}
 \description{
 The input data frame should have a limited number of columns and at least two rows
 }
