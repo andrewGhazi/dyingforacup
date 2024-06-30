@@ -1,0 +1,63 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# dyingforacup
+
+[DO YOU FOLKS LIKE COFFEE?!](https://www.youtube.com/watch?v=RJC9DXQAd7U)
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This is the package I use to optimize my coffee brewing with [Bayesian Optimization](https://www.youtube.com/watch?v=wZODGJzKmD0)
+
+## Installation
+
+You need to install [`cmdstanr`](https://mc-stan.org/cmdstanr/index.html) to use this package:
+
+```{r eval=FALSE}
+# we recommend running this is a fresh R session or restarting your current session
+install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev", getOption("repos")))
+```
+
+You can install the development version of `dyingforacup` like so:
+
+```{r eval=FALSE}
+remotes::install_github('andrewGhazi/dyingforacup', type = "source")
+```
+
+## Example
+
+Give the `run_gp()` function a data frame of brew parameters with an 
+
+```{r eval=FALSE}
+library(dyingforacup)
+
+
+dat = tibble::tribble(
+  ~grinder_setting, ~temp, ~bloom_time, ~rating,
+  # 8, 193, 25, 1.1,
+  7, 195, 20, -.7,
+  9, 179, 45, -1,
+  9, 195, 25, -.5,
+) 
+
+
+suggest_next(dat,
+             iter_sampling = 4000, 
+             refresh = 1250, 
+             show_exceptions = FALSE, 
+             adapt_delta = .95, 
+             parallel_chains = 4)
+```

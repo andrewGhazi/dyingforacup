@@ -1,0 +1,11 @@
+^.*\.Rproj$
+^\.git$
+^\.github$
+^\.gitignore$
+^\.Rbuildignore$
+^\.RData$
+^\.Rhistory$
+^\.Rproj\.user$
+^NOTICE$
+^LICENSE\.md$
+^README\.Rmd$
