@@ -145,14 +145,13 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   
   obs_max = max(dat$rating)
   
-  offset = .25
   minus_max = qM(gp_res |> get_vars("f_star", regex = TRUE)) - obs_max - offset
   
   w = 1*(minus_max > 0)
   
   acq = minus_max * w
   
-  max_pred_dens = fsum(acq) |> which.max()
+  max_pred_dens = fmean(acq) |> which.max()
   
   if (max_pred_dens == 1) cli::cli_warn("Selected the first grid point as maximum of the acquisition function. You may need to run the chains for longer or lower {.var offset}.")
   
