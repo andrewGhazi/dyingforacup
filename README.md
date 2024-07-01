@@ -23,7 +23,8 @@ package:
 install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev", getOption("repos")))
 ```
 
-You can install the development version of `dyingforacup` like so:
+After that, you can install the development version of `dyingforacup`
+like so:
 
 ``` r
 remotes::install_github('andrewGhazi/dyingforacup', type = "source")
@@ -51,3 +52,11 @@ suggest_next(dat,
              adapt_delta = .95, 
              parallel_chains = 4)
 ```
+
+## 1D Example animation
+
+## TODO list
+
+- User prior input
+- Viz functions
+- ARD
