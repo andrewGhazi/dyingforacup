@@ -7,7 +7,7 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Demonstrate how to create an R package with pre-compiled Stan
   models.
 Depends:
-  R (>= 4.0.0)
+  R (>= 4.2.1)
 Imports:
     cli,
     collapse,
@@ -21,3 +21,5 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
 License: GPL (>= 3)
+Suggests: 
+    ggplot2

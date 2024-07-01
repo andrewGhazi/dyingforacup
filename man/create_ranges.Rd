@@ -9,5 +9,10 @@ create_ranges()
 \description{
 This function creates an example data frame of mins and maxs for brew
   parameter settings. That is, the range of grinder settings I want to search is from 4
-  to 14, temperatures from 170 to 210F, and bloom times from 0 to 60s.
+  to 14, temperatures from 170 to 210F, and bloom times from 0 to 60s. This sets the
+  range of the grid of the brew parameter space that is evaluated.
+
+  Brew parameters named `grinder_setting`, `temp`, and `bloom_time` get special
+  treatment when the grid is created. They specifically get designated step sizes of
+  0.5, 5, and 10 respectively.
 }

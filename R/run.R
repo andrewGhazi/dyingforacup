@@ -45,7 +45,12 @@ get_x_grid = function(max_grid_size,
 #' Create a range data frame
 #' @description This function creates an example data frame of mins and maxs for brew
 #'   parameter settings. That is, the range of grinder settings I want to search is from 4
-#'   to 14, temperatures from 170 to 210F, and bloom times from 0 to 60s.
+#'   to 14, temperatures from 170 to 210F, and bloom times from 0 to 60s. This sets the
+#'   range of the grid of the brew parameter space that is evaluated.
+#'
+#'   Brew parameters named `grinder_setting`, `temp`, and `bloom_time` get special
+#'   treatment when the grid is created. They specifically get designated step sizes of
+#'   0.5, 5, and 10 respectively. 
 #'
 #' @export
 create_ranges = function() {
@@ -120,8 +125,7 @@ run_gp = function(dat, ..., max_grid_size = 2000,
   X = centered_dat |> get_vars("_cent", regex=TRUE) |> qM()
   
   list(run_gp_model(X = X, y = dat$rating, X_pred = x_grid_cent, ...),
-       x_grid,
-       x_grid_cent)
+       x_grid)
 }
 
 #' Suggest the next point to try
@@ -138,7 +142,6 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   
   gp_res = run_res[[1]]
   x_grid = run_res[[2]]
-  x_grid_cent = run_res[[3]]
   
   obs_max = max(dat$rating)
   

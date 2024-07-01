@@ -29,5 +29,6 @@ run_gp_model = function(X, y, X_pred, ..., verbose) {
   fit = model$sample(data = data_list,
                      ...)
   
-  fit$draws(format = "data.frame")
+  fit$draws(format = "data.frame",
+            variables = c("alpha", "rho", "sigma", "f_star"))
 }
