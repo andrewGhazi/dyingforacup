@@ -7,7 +7,7 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Demonstrate how to create an R package with pre-compiled Stan
   models.
 Depends:
-  R (>= 4.2.1)
+  R (>= 4.1)
 Imports:
     cli,
     collapse,
