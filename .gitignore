@@ -9,3 +9,5 @@ inst/stan/**/*.exe
 inst/stan/**/*.EXE
 *.dll
 dyingforacup.Rproj
+R/setup_env.R
+src/stan/gp_mod

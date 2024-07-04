@@ -10,7 +10,8 @@ suggest_next(
   max_grid_size = 2000,
   param_ranges = create_ranges(),
   param_grid = NULL,
-  offset = 0.25
+  offset = 0.25,
+  lambda = 0.01
 )
 }
 \arguments{
@@ -26,7 +27,15 @@ suggest_next(
 
 \item{offset}{expected improvement hyperparameter. Higher values encourage more
 exploration. Interpreted on the same scale as ratings.}
+
+\item{lambda}{tradeoff between weighting posterior predictive variance and expected
+improvement at grid values.}
 }
 \description{
 Suggest the next point to try
+}
+\details{
+The acquisition function is \code{lambda*f_star_var + (1-lambda)*exp_imp}.
+Higher values of lambda up-weight posterior predictive variance, leading to more
+exploration over exploitation.
 }
