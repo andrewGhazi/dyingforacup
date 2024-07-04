@@ -57,6 +57,22 @@ suggest_next(dat,
 
 ## TODO list
 
+Easy:
+
 - User prior input
 - Viz functions
-- ARD
+
+Medium:
+
+- Non-normal outcome
+- Fast GP approximations for 1D/2D datasets
+
+Hard:
+
+- ARD / parameter-specific length-scales
+- heteroscedasticity
+
+Nightmare:
+
+- Fast GP approximations for 3D+
+  - I think this would require writing my own ND FFT function?
