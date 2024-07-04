@@ -36,7 +36,7 @@ model {
   rho ~ inv_gamma(3,3);
   // alpha ~ std_normal();
   alpha ~ inv_gamma(3,3);
-  sigma ~ normal(0,.2);
+  sigma ~ student_t(6, 0, .2);
 
   y ~ multi_normal_cholesky(mu, L_K);
 }
