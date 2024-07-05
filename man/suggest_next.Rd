@@ -31,11 +31,19 @@ exploration. Interpreted on the same scale as ratings.}
 \item{lambda}{tradeoff between weighting posterior predictive variance and expected
 improvement at grid values.}
 }
+\value{
+a list with elements:
+\itemize{
+  \item{draws_df}{a draws data frame of model parameters and grid point predictive draws f_star}
+  \item{acq_df}{a data table of acquisition function values and corresponding grid point values}
+  \item{suggested}{the row of \code{acq_df} that maximizes the acquisition function}
+}
+}
 \description{
 Suggest the next point to try
 }
 \details{
 The acquisition function is \code{lambda*f_star_var + (1-lambda)*exp_imp}.
 Higher values of lambda up-weight posterior predictive variance, leading to more
-exploration over exploitation.
+exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - off}
 }

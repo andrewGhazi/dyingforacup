@@ -139,7 +139,13 @@ run_gp = function(dat, ..., max_grid_size = 2000,
 #'   improvement at grid values.
 #' @details The acquisition function is \code{lambda*f_star_var + (1-lambda)*exp_imp}.
 #' Higher values of lambda up-weight posterior predictive variance, leading to more
-#' exploration over exploitation.
+#' exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - off}
+#' @returns a list with elements:
+#' \itemize{
+#'   \item{draws_df}{a draws data frame of model parameters and grid point predictive draws f_star}
+#'   \item{acq_df}{a data table of acquisition function values and corresponding grid point values}
+#'   \item{suggested}{the row of \code{acq_df} that maximizes the acquisition function}
+#' }
 #'
 #' @export
 suggest_next = function(dat, ..., max_grid_size = 2000,
@@ -157,7 +163,7 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   f_star_mat = qM(gp_res |> get_vars("f_star", regex = TRUE))
   
   # expected improvement ----
-  minus_max = f_star_mat - obs_max - offset
+  minus_max = f_star_mat - (obs_max - offset)
   
   w = 1*(minus_max > 0)
   
@@ -197,6 +203,6 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   suggest = acq_df |> sbt(whichv(acq, fmax(acq))) 
   
   list(draws_df = gp_res, 
-       x_grid = x_grid, 
+       acq_df = acq_df, 
        suggested = suggest )
 }
