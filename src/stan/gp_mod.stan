@@ -16,7 +16,7 @@ transformed data {
 
 parameters {
   real<lower=0> rho; // length scale
-  real<lower=0> alpha; // wiggliness
+  real<lower=0> alpha; // amplitude
   real<lower=0> sigma; // I'm giving ratings with a known variance of 1
 }
 
@@ -33,23 +33,24 @@ transformed parameters {
 }
 
 model {
-  rho ~ inv_gamma(3,3);
+  // rho ~ inv_gamma(3,3);
+  rho ~ std_normal();
   // alpha ~ std_normal();
-  alpha ~ inv_gamma(3,3);
-  sigma ~ student_t(6, 0, .2);
+  alpha ~ inv_gamma(1.5,1.5);
+  sigma ~ student_t(3, 0, .2);
 
   y ~ multi_normal_cholesky(mu, L_K);
 }
 
 generated quantities {
+  vector[N_pred] f_mean;
   vector[N_pred] f_star;
   {
     matrix[N, N_pred] K_x_x_pred = gp_exp_quad_cov(x, x_pred, alpha, rho);
     vector[N] K_div_y = mdivide_right_tri_low(mdivide_left_tri_low(L_K, y)', L_K)';
-    f_star = K_x_x_pred' * K_div_y;
-  }
-
-  for (i in 1:N_pred) {
-    f_star[i] += normal_rng(0, sigma);
+    f_mean = K_x_x_pred' * K_div_y;
+    for (i in 1:N_pred) {
+      f_star[i] = normal_rng(f_mean[i], sigma);
+    }
   }
 }

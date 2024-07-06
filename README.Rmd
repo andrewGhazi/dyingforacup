@@ -70,7 +70,7 @@ Easy:
 Medium:
 
 * Non-normal outcome
-* Fast GP approximations for 1D/2D datasets
+* Fast GP approximations for 1D/2D datasets with [`gptools`](https://github.com/onnela-lab/gptools/tree/main)
 
 Hard:
 
@@ -81,3 +81,4 @@ Nightmare:
 
 * Fast GP approximations for 3D+ 
   * I think this would require writing my own ND FFT function?
+* Refactor to use INLA (preferably from scratch over `R-INLA`)

@@ -115,9 +115,11 @@ run_gp = function(dat, ..., max_grid_size = 2000,
   
   check_df(dat)
   
-  cr_res       = check_ranges(dat, param_ranges)
-  dat          = cr_res[[1]]
-  param_ranges = cr_res[[2]]
+  if (!is.null(param_grid)) {
+    cr_res       = check_ranges(dat, param_ranges)
+    dat          = cr_res[[1]]
+    param_ranges = cr_res[[2]]
+  }
   
   x_grid = get_x_grid(max_grid_size, param_ranges, param_grid)
   x_grid_cent = center_grid(x_grid, param_ranges)
@@ -139,7 +141,7 @@ run_gp = function(dat, ..., max_grid_size = 2000,
 #'   improvement at grid values.
 #' @details The acquisition function is \code{lambda*f_star_var + (1-lambda)*exp_imp}.
 #' Higher values of lambda up-weight posterior predictive variance, leading to more
-#' exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - off}
+#' exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - offset}. 
 #' @returns a list with elements:
 #' \itemize{
 #'   \item{draws_df}{a draws data frame of model parameters and grid point predictive draws f_star}
@@ -153,7 +155,11 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
                         offset = .25,
                         lambda = .01) {
   
-  run_res = run_gp(dat, ...)
+  run_res = run_gp(dat, 
+                   max_grid_size = max_grid_size, 
+                   param_ranges = param_ranges, 
+                   param_grid = param_grid, 
+                   ...)
   
   gp_res = run_res[[1]]
   x_grid = run_res[[2]]
@@ -161,6 +167,7 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   obs_max = max(dat$rating)
   
   f_star_mat = qM(gp_res |> get_vars("f_star", regex = TRUE))
+  f_mean_mat = qM(gp_res |> get_vars("f_mean", regex = TRUE))
   
   # expected improvement ----
   minus_max = f_star_mat - (obs_max - offset)
@@ -171,7 +178,7 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   
   max_pred_dens = exp_imp |> which.max()
   
-  if (max_pred_dens == 1) cli::cli_warn("Selected the first grid point as maximum of the acquisition function. You may need to run the chains for longer or lower {.var offset}.")
+  if (all(exp_imp < .Machine$double.eps^0.5)) cli::cli_warn("All expected improvement values near zero. You may need to run the chains for longer or raise {.var offset}.")
   
   # pred_g = x_grid[max_pred_dens,,drop=FALSE][,"gc"]
   
@@ -189,13 +196,13 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
   #   scale_fill_viridis_c(limits = post_range)
   
   # posterior uncertainty ----
-  f_star_var = f_star_mat |> fvar()
+  f_mean_sd = f_mean_mat |> fsd()
   
   # combined expected improvement and posterior uncertainty ----
   
-  combined_acq = lambda*f_star_var + (1-lambda)*exp_imp
+  combined_acq = lambda*f_mean_sd + (1-lambda)*exp_imp
   
-  acq_df = data.table(post_var = f_star_var,
+  acq_df = data.table(post_sd = f_mean_sd,
                       exp_imp = exp_imp,
                       acq = combined_acq) |> 
     cbind(x_grid) 

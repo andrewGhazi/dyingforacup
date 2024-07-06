@@ -45,5 +45,5 @@ Suggest the next point to try
 \details{
 The acquisition function is \code{lambda*f_star_var + (1-lambda)*exp_imp}.
 Higher values of lambda up-weight posterior predictive variance, leading to more
-exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - off}
+exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - offset}.
 }

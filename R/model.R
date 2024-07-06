@@ -30,5 +30,5 @@ run_gp_model = function(X, y, X_pred, ..., verbose) {
                      ...)
   
   fit$draws(format = "data.frame",
-            variables = c("alpha", "rho", "sigma", "f_star"))
+            variables = c("alpha", "rho", "sigma", "f_mean", "f_star"))
 }
