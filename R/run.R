@@ -115,16 +115,20 @@ run_gp = function(dat, ..., max_grid_size = 2000,
   
   check_df(dat)
   
-  if (!is.null(param_grid)) {
+  if (is.null(param_grid)) {
     cr_res       = check_ranges(dat, param_ranges)
     dat          = cr_res[[1]]
     param_ranges = cr_res[[2]]
+    x_grid = get_x_grid(max_grid_size, param_ranges, param_grid)
+    x_grid_cent = center_grid(x_grid, param_ranges)
+    centered_dat = center_dat(dat, param_ranges)
+  } else {
+    # TODO: make sure this handles uneven user-provided grids correctly.
+    emp_ranges = param_grid |> lapply(frange) |> qDT()
+    x_grid = param_grid
+    x_grid_cent = param_grid |> center_grid(emp_ranges)
+    centered_dat = center_dat(dat, emp_ranges)
   }
-  
-  x_grid = get_x_grid(max_grid_size, param_ranges, param_grid)
-  x_grid_cent = center_grid(x_grid, param_ranges)
-  
-  centered_dat = center_dat(dat, param_ranges)
   
   X = centered_dat |> get_vars("_cent", regex = TRUE) |> qM()
   
@@ -153,7 +157,7 @@ run_gp = function(dat, ..., max_grid_size = 2000,
 suggest_next = function(dat, ..., max_grid_size = 2000,
                         param_ranges = create_ranges(), param_grid = NULL,
                         offset = .25,
-                        lambda = .01) {
+                        lambda = .1) {
   
   run_res = run_gp(dat, 
                    max_grid_size = max_grid_size, 

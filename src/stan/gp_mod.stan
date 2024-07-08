@@ -33,10 +33,10 @@ transformed parameters {
 }
 
 model {
-  // rho ~ inv_gamma(3,3);
-  rho ~ std_normal();
+  rho ~ inv_gamma(3,3);
+  // rho ~ std_normal();
   // alpha ~ std_normal();
-  alpha ~ inv_gamma(1.5,1.5);
+  alpha ~ inv_gamma(3,3);
   sigma ~ student_t(3, 0, .2);
 
   y ~ multi_normal_cholesky(mu, L_K);
@@ -48,9 +48,16 @@ generated quantities {
   {
     matrix[N, N_pred] K_x_x_pred = gp_exp_quad_cov(x, x_pred, alpha, rho);
     vector[N] K_div_y = mdivide_right_tri_low(mdivide_left_tri_low(L_K, y)', L_K)';
-    f_mean = K_x_x_pred' * K_div_y;
+    vector[N_pred] f_mu = K_x_x_pred' * K_div_y;
+    matrix[N, N_pred] v_pred = mdivide_left_tri_low(L_K, K_x_x_pred);
+    matrix[N_pred, N_pred] cov_f2 = gp_exp_quad_cov(x_pred, alpha, rho) - v_pred' * v_pred;
+    
+    f_mean = multi_normal_rng(f_mu, add_diag(cov_f2, rep_vector(delta, N_pred)));
+    
     for (i in 1:N_pred) {
       f_star[i] = normal_rng(f_mean[i], sigma);
     }
   }
+  
+  
 }

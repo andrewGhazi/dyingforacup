@@ -11,7 +11,7 @@ suggest_next(
   param_ranges = create_ranges(),
   param_grid = NULL,
   offset = 0.25,
-  lambda = 0.01
+  lambda = 0.1
 )
 }
 \arguments{
