@@ -53,7 +53,7 @@ Optimization](https://www.youtube.com/watch?v=wZODGJzKmD0), you can get
 suggestions that are, in a sense, optimal. Let’s see how automated
 suggestions work out:
 
-![](man/figures/vid.mp4)
+<https://youtu.be/RurFeg7cxGQ?si=lCAoypk-DkLnObJf>
 
 There’s a lot going on in that video. This explains each panel:
 
