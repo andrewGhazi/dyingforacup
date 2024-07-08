@@ -30,6 +30,26 @@ like so:
 remotes::install_github('andrewGhazi/dyingforacup', type = "source")
 ```
 
+## 1D Example animation
+
+The point of this package is to suggest coffee brewing configurations in
+brew parameter space that balance A) improving the expected rating and
+B) exploring the space. Say you only had one brew parameter: the
+coarseness dial on the grinder. Imagine the true, unknown relationship
+between grinder setting and coffee quality looks like this:
+
+![](man/figures/bo_anim0-fs8.png)
+
+You have one starting observation at 4.5 (too fine). There’s a bit of
+noise about the true function. What setting should you try next?
+
+If you use [Bayesian
+Optimization](https://www.youtube.com/watch?v=wZODGJzKmD0), you can
+balance exploration and exploitation. Let’s see how automated
+suggestions work out:
+
+![](man/figures/vid.mp4)
+
 ## Example
 
 Give the `suggest_next()` function a data frame of brew parameters with
@@ -53,8 +73,6 @@ suggest_next(dat,
              parallel_chains = 4)
 ```
 
-## 1D Example animation
-
 ## TODO list
 
 Easy:
@@ -65,7 +83,8 @@ Easy:
 Medium:
 
 - Non-normal outcome
-- Fast GP approximations for 1D/2D datasets
+- Fast GP approximations for 1D/2D datasets with
+  [`gptools`](https://github.com/onnela-lab/gptools/tree/main)
 
 Hard:
 
@@ -76,3 +95,4 @@ Nightmare:
 
 - Fast GP approximations for 3D+
   - I think this would require writing my own ND FFT function?
+- Refactor to use INLA (preferably from scratch over `R-INLA`)
