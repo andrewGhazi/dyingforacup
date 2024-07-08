@@ -53,9 +53,9 @@ Optimization](https://www.youtube.com/watch?v=wZODGJzKmD0), you can get
 suggestions that are, in a sense, optimal. Let’s see how automated
 suggestions work out:
 
-![](https://www.youtube.com/embed/RurFeg7cxGQ)
+![](man/figures/out2.gif)
 
-There’s a lot going on in that video. This explains each panel:
+There’s a lot going on in that animation. This explains each panel:
 
 - Top panel:
   - dark grey line: same true (unknown) relationship between grinder

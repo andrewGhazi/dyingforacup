@@ -49,9 +49,9 @@ You have one starting observation at 4.5 (too fine, so the observed rating is lo
 
 If you use Gaussian processes and [Bayesian Optimization](https://www.youtube.com/watch?v=wZODGJzKmD0), you can get suggestions that are, in a sense, optimal. Let's see how automated suggestions work out:
 
-![](https://www.youtube.com/embed/RurFeg7cxGQ)
+![](man/figures/out2.gif)
 
-There's a lot going on in that video. This explains each panel:
+There's a lot going on in that animation. This explains each panel:
 
 * Top panel: 
   * dark grey line: same true (unknown) relationship between grinder setting and coffee quality as above
