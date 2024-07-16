@@ -23,6 +23,12 @@ package:
 install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev", getOption("repos")))
 ```
 
+then use that to install CmdStan:
+
+``` r
+install_cmdstan(cores = 2)
+```
+
 After that, you can install the development version of `dyingforacup`
 like so:
 
@@ -32,11 +38,15 @@ remotes::install_github('andrewGhazi/dyingforacup', type = "source")
 
 ## 1D Example animation
 
+This will give you the gist of it:
+
+![](man/figures/out2.gif)
+
 The point of this package is to suggest coffee brewing configurations in
 brew parameter space that balance A) improving the expected rating and
-B) exploring the space. There are a **lot** of dials to turn when
-brewing coffee, and it’s practically impossible to try every combination
-of grind size, temperature, bloom time, filter thickness, etc.
+B) exploring the space. There are *many* dials to turn when brewing
+coffee, and it’s practically impossible to try every combination of
+grind size, temperature, bloom time, etc.
 
 Say you only had one brew parameter: the coarseness dial on the grinder.
 Imagine the true, unknown relationship between grinder setting and
@@ -50,8 +60,12 @@ setting should you try next?
 
 If you use Gaussian processes and [Bayesian
 Optimization](https://www.youtube.com/watch?v=wZODGJzKmD0), you can get
-suggestions that are, in a sense, optimal. Let’s see how automated
-suggestions work out:
+suggestions that are, in a sense, optimal. The suggestions balance
+identifying/refining promising regions and collapsing uncertainty in
+unexplored regions. Let’s look again at the gif demonstrating automated
+suggestions along a one-dimensional brew parameter space for grinder
+setting. At each iteration, you fit a GP to the data, then use that fit
+to determine where the next data point should be collected:
 
 ![](man/figures/out2.gif)
 
@@ -80,13 +94,13 @@ You can see that first it suggests a very high setting because that’s
 where there’s the most uncertainty given the first point. After that
 turns out badly as well, it tries in the middle. That does much better,
 after which it hones in on the global maximum (it gets somewhat lucky
-and finds a near optimal point at only the fourth suggestion). After
+and finds a near-optimal point at only the fourth suggestion). After
 that it tries elsewhere in the space, collapsing uncertainty wherever
 it’s high to see if there’s some other hidden peak.
 
 ## Usage
 
-As the last frame of the video suggests, this process can be extended to
+As the last frame of the gif suggests, this process can be extended to
 an arbitrary number of brew parameters. Bear in mind that this isn’t
 magic, and finding optima in higher dimensional spaces will require many
 more observations. This is especially true if the ratings are noisy, so
@@ -133,13 +147,14 @@ a grid of brew parameters, and a suggestion on where to go next.
 `offset` and `lambda` can be tweaked to control exploration vs
 exploitation, but expect to be suggested some combinations that result
 in really bad coffee sometimes. See `?suggest_next` for more detail on
-these and more function arguments.
+these function arguments and more.
 
 ## TODO list
 
 Easy:
 
 - User prior input
+- Other acquisition functions
 - Viz functions
 
 Medium:
@@ -157,5 +172,5 @@ Hard:
 Nightmare:
 
 - Fast GP approximations for 3D+
-  - I think this would require writing my own ND FFT function?
-- Refactor to use INLA (preferably from scratch over `R-INLA`)
+  - This would probably require some custom ND FFT functions
+- Refactor to use INLA
