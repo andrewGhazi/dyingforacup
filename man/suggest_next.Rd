@@ -44,6 +44,18 @@ Suggest the next point to try
 }
 \details{
 The acquisition function is \code{lambda*f_star_var + (1-lambda)*exp_imp}.
-Higher values of lambda up-weight posterior predictive variance, leading to more
-exploration over exploitation. Lower lambda values up-weight expected improvement over \code{max(dat$rating) - offset}.
+  Higher values of lambda up-weight posterior predictive variance, leading to more
+  exploration over exploitation. Lower lambda values up-weight expected improvement
+  over \code{max(dat$rating) - offset}.
+
+  For the sake of simplicity, the range of each parameter in the grid is linearly
+  scaled to an N-dimensional hypercube that spans -3 to 3 on each edge. So the model is
+  insensitive to the range of grid values. It won't make a difference if your grinder
+  shows different numbers or something.
+
+  It's normal for the sampling to slow down dramatically after the warmup phase. This
+  is because while it's fast to fit a GP to a tiny number of observations, it's much
+  more expensive to evaluate the GP over the parameter grid. This happens in the
+  generated quantities block of the model, which only gets evaluated in the sampling
+  phase, which is why it's slow. Whatever man. My CPU has 16 physical cores.
 }
