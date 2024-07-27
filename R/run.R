@@ -104,12 +104,12 @@ center_dat = function(dat, param_ranges) {
 #' @param dat data frame input of brew parameters and rating
 #' @param ... arguments passed to cmdstanr's sample method
 #' @param max_grid_size maximum number of grid points to evaluate
-#' @param param_ranges upper and lower limits of parameter ranges to evaluate (ignored if param_grid is specified directly)
+#' @param param_ranges upper and lower limits of parameter ranges to evaluate (ignored if
+#'   param_grid is specified directly)
 #' @param param_grid user-specified grid of brew parameters to evaluate GP at
-#' @details
-#' The function \code{\link[dyingforacup:create_ranges]{dyingforacup::create_ranges()}} will create an example range df.
-#' 
-#' @export
+#' @details The function
+#' \code{\link[dyingforacup:create_ranges]{dyingforacup::create_ranges()}} will create an
+#' example range df.
 run_gp = function(dat, ..., max_grid_size = 2000,
                   param_ranges = create_ranges(), param_grid = NULL) {
   
@@ -214,3 +214,39 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
        acq_df = acq_df, 
        suggested = suggest )
 }
+
+#' Suggest a coffee-related tune
+#' 
+#' @details
+#' Some are more rare than others, collect all 8!
+#' 
+#' @export
+suggest_tune = function() {
+  msgs = c("How 'bout this one? Donk:")
+  
+  song_info = data.table(u = c("https://www.youtube.com/watch?v=RJC9DXQAd7U", 
+                               "https://www.youtube.com/watch?v=zTbJBnkRkFo",
+                               "https://www.youtube.com/watch?v=lpOktupkl0c",
+                               "https://www.youtube.com/watch?v=PU_kd9uJQEI",
+                               "https://www.youtube.com/watch?v=iP6IUqrFHjw",
+                               "https://www.youtube.com/watch?v=cm3YM_9iW_s",
+                               "https://www.youtube.com/watch?v=_rp4tGqRhWA",
+                               "https://www.youtube.com/watch?v=nsFS8tt_3fs"),
+                         info = c('Dethklok - "Duncan Hills Coffee Jingle"',
+                                  'Frank Sinatra - "The Coffee Song"',
+                                  'Black Flag - "Black Coffee"',
+                                  'Humble Pie - "Black Coffee"',
+                                  'The Ink Spots - "The Java Jive"',
+                                  'Otis Redding - "Cigarettes and Coffee"',
+                                  "Marty Robbins - \"Smokin' Cigarettes And Drinkin\' Coffee Blues\"",
+                                  'Anthrax - "Cupajoe"')) |> 
+    mtt(p = rev(1:fnobs(u)))
+  
+  i = sample(nrow(song_info), 1, prob = song_info$p)
+  
+  cli::cli_inform("How 'bout this one? {.emph Donk}:")
+  cli::cli_inform("")
+  cli::cli_inform("{.strong {song_info$info[i]}}")
+  cli::cli_inform("{.url {song_info$u[i]}}")
+}
+

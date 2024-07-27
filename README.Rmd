@@ -113,7 +113,7 @@ $suggested
      <num>   <num> <num>           <num> <num>      <num>
 1:    1.19   0.464 0.536               9   195         30
 ```
-This returns a list of MCMC draws, the acquisition function values over a grid of brew parameters, and a suggestion on where to go next. `offset` and `lambda` can be tweaked to control exploration vs exploitation, but expect to be suggested some combinations that result in really bad coffee sometimes.  See `?suggest_next` for more detail on these function arguments and more.
+This returns a list of MCMC draws, the acquisition function values over a grid of brew parameters, and a suggestion on where to go next. `offset` and `lambda` can be tweaked to control exploration vs exploitation, but expect to be suggested some combinations that result in really bad coffee sometimes (especially early on before it has collapsed the uncertainty along the outer edges of the parameter space). See `?suggest_next` for more detail on these function arguments and more.
 
 ## TODO list
 
