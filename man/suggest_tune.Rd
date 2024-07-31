@@ -10,5 +10,5 @@ suggest_tune()
 Suggest a coffee-related tune
 }
 \details{
-Some are more rare than others, collect all 8!
+Some are more rare than others, collect all 9!
 }

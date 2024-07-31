@@ -218,7 +218,7 @@ suggest_next = function(dat, ..., max_grid_size = 2000,
 #' Suggest a coffee-related tune
 #' 
 #' @details
-#' Some are more rare than others, collect all 8!
+#' Some are more rare than others, collect all 9!
 #' 
 #' @export
 suggest_tune = function() {
@@ -231,6 +231,7 @@ suggest_tune = function() {
                                "https://www.youtube.com/watch?v=iP6IUqrFHjw",
                                "https://www.youtube.com/watch?v=cm3YM_9iW_s",
                                "https://www.youtube.com/watch?v=_rp4tGqRhWA",
+                               "https://www.youtube.com/watch?v=KRkQRpxhJcs",
                                "https://www.youtube.com/watch?v=nsFS8tt_3fs"),
                          info = c('Dethklok - "Duncan Hills Coffee Jingle"',
                                   'Frank Sinatra - "The Coffee Song"',
@@ -239,6 +240,7 @@ suggest_tune = function() {
                                   'The Ink Spots - "The Java Jive"',
                                   'Otis Redding - "Cigarettes and Coffee"',
                                   "Marty Robbins - \"Smokin' Cigarettes And Drinkin\' Coffee Blues\"",
+                                  'They Might Be Giants - "Does Anybody Here Smell Something Burning?"',
                                   'Anthrax - "Cupajoe"')) |> 
     mtt(p = rev(1:fnobs(u)))
   
