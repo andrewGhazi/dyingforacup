@@ -81,6 +81,7 @@ There’s a lot going on in that animation. This explains each panel:
   - red arrow & dashed line: the previous best observation shifted down
     by a set amount (`offset`, the length of the red arrow).
 - 2nd panel, blue function: fit sd, the sd of the light grey lines
+  (which is not the same thing as the width of the grey ribbon)
 - 3rd panel, red function: expected improvement: the expectation value
   of a new coffee at the given setting falling above the dashed red
   line.
@@ -123,10 +124,10 @@ dat = data.frame(grinder_setting = c(  8,    7,   9),
                  rating          = c(1.1, -0.7,  -1))
 
 suggest_next(dat,
-             iter_sampling = 1000, 
-             refresh = 0, 
-             offset = .33, 
-             lambda = .1,
+             lambda          = .1,    # exploration parameters
+             offset          = .33,
+             iter_sampling   = 1000,  # sampler parameters
+             refresh         = 100,
              show_exceptions = FALSE, 
              parallel_chains = 4)
 ```
@@ -146,8 +147,13 @@ This returns a list of MCMC draws, the acquisition function values over
 a grid of brew parameters, and a suggestion on where to go next.
 `offset` and `lambda` can be tweaked to control exploration vs
 exploitation, but expect to be suggested some combinations that result
-in really bad coffee sometimes. See `?suggest_next` for more detail on
-these function arguments and more.
+in really bad coffee sometimes (especially early on before it has
+collapsed the uncertainty along the outer edges of the parameter space).
+See `?suggest_next` for more detail on these function arguments and
+more.
+
+Once you have a grid point to try, use `suggest_tune()` to get a
+coffee-related song to listen to while you brew!
 
 ## TODO list
 
